@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <title>Ananyze</title>
+<style>
+a{
+  text-decoration:none;
+  color:green;
+  border:1px solid green;
+  padding : 5px 3px 5px 3px;
+  text-align: center;
+}
+a:hover{
+  color:white;
+  background-color: green;
+}
+{% load static %}
+
+</style>
+    </head>
+    <body>
+      <form action="{% url 'change' %}" method="POST">
+        {% csrf_token %}
+        <label for="workbk">Name of the file :</label><br>
+        <input type="text" name="workbk" id='workbk' required/>
+        <br><br>
+
+        <label for="no_sub">Enter the no  of subjects :</label><br>
+        <input type="text" name="no_sub" id='no_sub' required/>
+        <br><br>
+
+        <label for="new_file">Enter the Name of the new file :</label><br>
+        <input type="text" name="new_file" id='new_file' required/>
+        <br><br>
+
+        <label for="credit">Enter the credit for the files in order : </label><br>
+        <input type="text" name="credit" id='credit' required/>
+        <br><br>
+        <button type="submit" class="btn btn-primary">SUBMIT
+	</button>
+
+
+
+      </form>
+      <br><br><br>
+      {% if uploaded %}
+    <p>File uploaded at: <a href="/home/darkman/Desktop/mk/k/media/step2.xlsx" target='_blank' >Download</a></p>
+  {% endif %}
+
+<a href="media/" download>Download</a>
+
+    </body>
+  </html>

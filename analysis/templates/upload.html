@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <title>RESULT ANALYSIS</title>
+  </head>
+
+  <body>
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+
+      <input type="file" name="file">
+      <button type="submit">Upload</button>
+    </form>
+
+    <p>Uploaded files:</p>
+      <ul>
+        {% for obj in files %}
+          <li>
+            <a href="{{ obj.files.url }}">{{ obj.files.name }}</a>
+
+          </li>
+        {% endfor %}
+      </ul>
+
+
+  </body>
+</html>
