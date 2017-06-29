@@ -1,5 +1,8 @@
 from django.shortcuts import render
+from openpyxl.styles import PatternFill
+from django.views.static import serve
 import openpyxl
+import time
 import subprocess
 from .models import File
 from .models import analyze
@@ -27,7 +30,7 @@ def change(request):
         credit = request.POST['credit']
         print subprocess.check_output("pwd",shell=True)
 
-        wb = openpyxl.load_workbook('/home/darkman/Desktop/mk/k/media/'+workbk)
+        wb = openpyxl.load_workbook('/home/uma/Mark/media/'+workbk)
         sheet = wb.active
         #max row
         mx_r = sheet.max_row
@@ -52,9 +55,13 @@ def change(request):
                     sheet[col.coordinate]=10
                 else:
                     sheet[col.coordinate]=10.1
-		wb.save(filename="/home/darkman/Desktop/mk/k/media/step1.xlsx")
+		wb.save(filename="/home/uma/Mark/media/step1.xlsx")
 
         uploaded = hitler(credit,no_sub,mx_r,mx_c,start_range,end_range)
+        print time.sleep(10)
+        print subprocess.check_output("cp /home/uma/Mark/media/step2.xlsx /home/uma/Mark/analysis/templates" , shell=True)
+        filepath = '/home/uma/Mark/media/step2.xlsx'
+    #    download(request,filepath)
         return render(request,'analyze.html',{'uploaded':uploaded})
     else:
         return render(request,'analyze.html')
@@ -63,7 +70,7 @@ def change(request):
         #the result is stored in this location in sheet
 def hitler(credit,no_sub,mx_r,mx_c,start_range,end_range):
 
-    wb = openpyxl.load_workbook('/home/darkman/Desktop/mk/k/media/step1.xlsx')
+    wb = openpyxl.load_workbook('/home/uma/Mark/media/step1.xlsx')
     sheet = wb.active
     #
     gpa = chr(ord('C')+no_sub)
@@ -86,8 +93,21 @@ def hitler(credit,no_sub,mx_r,mx_c,start_range,end_range):
             k = k+1
             res = round(float(sum1)/cr_sum , 2)
             sheet[val]=res
+           # sheet[val].fill = PatternFill(bgColor="FFC7CE" , fill_type="solid")
             print (val , sheet[val],sheet[val].value)
-            wb.save(filename="/home/darkman/Desktop/mk/k/media/step2.xlsx")
+            wb.save(filename="/home/uma/Mark/media/step2.xlsx")
+   # time.sleep(10)
+   
+    print subprocess.check_output("cp /home/uma/Mark/media/step2.xlsx /home/uma/Mark/analysis/templates",shell=True)
+    filepath = 'media/step2.xlsx'
+    return filepath
+  
+filepath = '/media/step2.xlsx'
+def download(request,filepath):
+    return serve(request, os.path.basename(filepath),os.path.dirname(filepath))
 
-        uploaded = '~/home/darkman/Desktop/mk/k/media/step2.xlsx'
-        return uploaded
+def update():
+    reg_num = raw_input("Enter the register no. ")
+
+
+

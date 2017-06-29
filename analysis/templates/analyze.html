@@ -1,7 +1,18 @@
 <!DOCTYPE html>
 <html>
-  <head>
-      <title>Ananyze</title>
+
+<head>
+{% load staticfiles %}
+
+
+<link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
+      <!-- Bootstrap theme -->
+          <link href="{% static "css/jumbotron.css" %}" rel="stylesheet">
+
+
+
+
+  <title>Ananyze</title>
 <style>
 a{
   text-decoration:none;
@@ -14,12 +25,13 @@ a:hover{
   color:white;
   background-color: green;
 }
-{% load static %}
+
 
 </style>
     </head>
     <body>
-      <form action="{% url 'change' %}" method="POST">
+    <div class="jumbotron">
+    <form action="{% url 'change' %}" method="POST">
         {% csrf_token %}
         <label for="workbk">Name of the file :</label><br>
         <input type="text" name="workbk" id='workbk' required/>
@@ -44,10 +56,12 @@ a:hover{
       </form>
       <br><br><br>
       {% if uploaded %}
-    <p>File uploaded at: <a href="/home/darkman/Desktop/mk/k/media/step2.xlsx" target='_blank' >Download</a></p>
+      <p>File uploaded at: <a href='{{ uploaded }}' target='_blank' >
+          {{uploaded}} </a></p>
   {% endif %}
 
-<a href="media/" download>Download</a>
-
+  <a href="/media/step2.xlsx" ><button class="btn btn-primary">Download</button></a>
+  <a href="/"><button class="btn btn-primary">Wanna Analyze Another File</button></a>
+ </div>
     </body>
   </html>
